@@ -1,0 +1,54 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "ORDERS" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>ORDERS</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ORDER_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">FK_ORDER_CUST (CUSTOMER_ID, CUST_REGION_CD) &rarr; CUSTOMER (CUST_ID, REGION_CODE)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "CUSTOMER" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>CUSTOMER</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CUST_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD ALIGN="LEFT">REGION_CODE</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "ORDER_DETAILS" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>ORDER_DETAILS</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">FK_ORDERDETAILS_ORDER (ORDER_ID) &rarr; ORDERS (ORDER_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">FK_ORDERDETAILS_PRODUCT (PROD_ID) &rarr; PRODUCTS (PRODUCT_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "PRODUCTS" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>PRODUCTS</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">PRODUCT_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "ORDERS" -> "CUSTOMER" [label=" FK_ORDER_CUST "];
+  "ORDER_DETAILS" -> "ORDERS" [label=" FK_ORDERDETAILS_ORDER "];
+  "ORDER_DETAILS" -> "PRODUCTS" [label=" FK_ORDERDETAILS_PRODUCT "];
+}
+
