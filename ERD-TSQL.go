@@ -149,7 +149,7 @@ func generateDot(relations []Relation) string {
 
 	sb.WriteString("digraph ERD {\n")
 	sb.WriteString("  rankdir=LR;\n")
-	sb.WriteString("  graph [splines=ortho];\n") // Using ortho splines
+	// sb.WriteString("  graph [splines=ortho];\n") // Using ortho splines
 	sb.WriteString("  node [shape=plaintext, style=filled, fillcolor=lightyellow];\n")
 	// Using xlabel for edges, as requested
 	sb.WriteString("  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];\n\n")
@@ -209,7 +209,7 @@ func generateDot(relations []Relation) string {
 		edgeKey := fmt.Sprintf("\"%s\" -> \"%s\" :: %s", rel.FkTable, rel.ReferencedTable, rel.FkConstraintName)
 		if !uniqueEdges[edgeKey] {
 			// Using xlabel as requested
-			sb.WriteString(fmt.Sprintf("  \"%s\" -> \"%s\" [xlabel=\" %s \"];\n",
+			sb.WriteString(fmt.Sprintf("  \"%s\" -> \"%s\" [label=\" %s \"];\n",
 				rel.FkTable, rel.ReferencedTable, rel.FkConstraintName))
 			uniqueEdges[edgeKey] = true
 		}
