@@ -33,74 +33,10 @@ type LPA struct {
 	// nature makes strict order less critical for computation itself.
 	nodes []string
 
-	// currentLabels holds the set of labels for each node.
-	// Access to currentLabels is protected by mu.
-	currentLabels map[string]LabelSet
+	// CurrentLabels holds the set of labels for each node.
+	// Access to CurrentLabels is protected by mu.
+	CurrentLabels map[string]LabelSet
 	mu            sync.RWMutex
-}
-
-// NewLPA creates and initializes a new LPA instance from a list of relations.
-// It builds the graph structure and sets initial labels (each node gets its own name as a label).
-func NewLPA(relations []Relation) (*LPA, error) {
-	adj := make(map[string][]Influence)
-	nodeSet := make(map[string]struct{}) // To collect unique node names
-	initialLabels := make(map[string]LabelSet)
-
-	if relations == nil {
-		// Handle nil input gracefully by returning an empty LPA state.
-		// Depending on strictness, an error could be returned instead:
-		// return nil, fmt.Errorf("input relations cannot be nil")
-		return &LPA{
-			graph:         adj,
-			nodes:         []string{},
-			currentLabels: initialLabels,
-		}, nil
-	}
-
-	for _, rel := range relations {
-		if rel.FkTable == "" || rel.ReferencedTable == "" {
-			// Optional: Add more robust validation or logging for empty table names or constraint names.
-			// fmt.Printf("Warning: Relation contains empty FkTable ('%s') or ReferencedTable ('%s')\n", rel.FkTable, rel.ReferencedTable)
-		}
-
-		// Add both tables to the set of known nodes
-		nodeSet[rel.FkTable] = struct{}{}
-		nodeSet[rel.ReferencedTable] = struct{}{}
-
-		// The FkTable is influenced by the ReferencedTable.
-		// Add ReferencedTable to the list of influencers for FkTable.
-		influence := Influence{
-			InfluencerTable: rel.ReferencedTable,
-			ConstraintName:  rel.FkConstraintName, // Store the constraint name
-		}
-		adj[rel.FkTable] = append(adj[rel.FkTable], influence)
-	}
-
-	// Create a sorted list of nodes. Sorting helps in producing deterministic
-	// outputs if the order of processing matters in any part (e.g., logging, testing).
-	nodeList := make([]string, 0, len(nodeSet))
-	for nodeName := range nodeSet {
-		nodeList = append(nodeList, nodeName)
-	}
-	slices.Sort(nodeList) // Sorts in-place. Requires Go 1.21+.
-
-	// Initialize labels: each node starts with its own name as its only label.
-	// Also, ensure all nodes (even those only appearing as ReferencedTable)
-	// exist in the adjacency list, potentially with an empty list of influencers.
-	for _, nodeName := range nodeList {
-		initialLabels[nodeName] = LabelSet{nodeName: {}}
-		if _, ok := adj[nodeName]; !ok {
-			// This node might only be a ReferencedTable or an isolated table.
-			// It has no outgoing influences defined by FKs where it is the FkTable.
-			adj[nodeName] = []Influence{} // Ensure all nodes exist in the graph map
-		}
-	}
-
-	return &LPA{
-		graph:         adj,
-		nodes:         nodeList,
-		currentLabels: initialLabels,
-	}, nil
 }
 
 // Run executes the Overlapping Label Propagation Algorithm.
@@ -111,9 +47,9 @@ func NewLPA(relations []Relation) (*LPA, error) {
 // The overlapping nature (union of labels) means labels are only added,
 // which makes the algorithm inherently stable and less prone to oscillations
 // compared to majority-voting LPAs.
-func (l *LPA) Run(maxIterations int) (map[string]LabelSet, int) {
+func (l *LPA) Run(maxIterations int) int {
 	if len(l.nodes) == 0 {
-		return make(map[string]LabelSet), 0
+		return 0
 	}
 
 	for iter := 0; iter < maxIterations; iter++ {
@@ -130,8 +66,8 @@ func (l *LPA) Run(maxIterations int) (map[string]LabelSet, int) {
 		// state from the end of the previous iteration (or initial state for iter 0).
 		// This is key for the "synchronous parallel" update style.
 		l.mu.RLock()
-		labelsSnapshot := make(map[string]LabelSet, len(l.currentLabels))
-		for node, ls := range l.currentLabels {
+		labelsSnapshot := make(map[string]LabelSet, len(l.CurrentLabels))
+		for node, ls := range l.CurrentLabels {
 			labelsSnapshot[node] = cloneLabelSet(ls) // Deep copy each LabelSet
 		}
 		l.mu.RUnlock()
@@ -172,8 +108,8 @@ func (l *LPA) Run(maxIterations int) (map[string]LabelSet, int) {
 		for nodeName, newLabels := range proposedLabelUpdates {
 			// Compare newLabels with the actual l.currentLabels[nodeName] (not the snapshot)
 			// to determine if a change occurred in this iteration.
-			if !areLabelSetsEqual(l.currentLabels[nodeName], newLabels) {
-				l.currentLabels[nodeName] = newLabels // Update the main label set for the next iteration
+			if !areLabelSetsEqual(l.CurrentLabels[nodeName], newLabels) {
+				l.CurrentLabels[nodeName] = newLabels
 				changedInIteration = true
 			}
 		}
@@ -181,12 +117,12 @@ func (l *LPA) Run(maxIterations int) (map[string]LabelSet, int) {
 
 		if !changedInIteration {
 			// fmt.Printf("LPA converged after %d iterations.\n", iter+1)
-			return l.GetLabelsCopy(), iter + 1 // Converged. iter+1 because iter is 0-indexed.
+			return iter + 1
 		}
 	}
 
 	fmt.Printf("LPA reached max iterations (%d).\n", maxIterations)
-	return l.GetLabelsCopy(), maxIterations // Max iterations reached
+	return maxIterations // Max iterations reached
 }
 
 // GetLabelsCopy returns a deep copy of the current labels.
@@ -195,8 +131,8 @@ func (l *LPA) GetLabelsCopy() map[string]LabelSet {
 	l.mu.RLock()
 	defer l.mu.RUnlock()
 
-	copiedLabels := make(map[string]LabelSet, len(l.currentLabels))
-	for node, ls := range l.currentLabels {
+	copiedLabels := make(map[string]LabelSet, len(l.CurrentLabels))
+	for node, ls := range l.CurrentLabels {
 		copiedLabels[node] = cloneLabelSet(ls)
 	}
 	return copiedLabels
@@ -221,6 +157,70 @@ func (l *LPA) GetGraphForOutput() map[string][]Influence {
 	return copiedGraph
 }
 
+func (l *LPA) Dump() {
+	// Access nodes and graph directly from lpaInstance. Labels are copied for safety if needed.
+	// For printing, direct read with RLock is fine for CurrentLabels.
+	// lpaInstance.nodes is sorted during NewLPA.
+
+	l.mu.RLock()
+	defer l.mu.RUnlock()
+
+	for _, tableName := range l.nodes { // Iterate in sorted order
+		// Print Labels
+		labels, ok := l.CurrentLabels[tableName]
+		if !ok {
+			fmt.Printf("Table %s: (no labels found)\n", tableName) // Should not happen
+			continue
+		}
+		labelList := make([]string, 0, len(labels))
+		for label := range labels {
+			labelList = append(labelList, label)
+		}
+		slices.Sort(labelList)
+		fmt.Printf("Table %s: Labels %v\n", tableName, labelList)
+
+		// Print Direct Influences from the perspective of FkTable <- ReferencedTable
+		// The graph stores FkTable -> []Influence{ReferencedTable, ConstraintName}
+		// This means tableName *is influenced by* entries in l.graph[tableName]
+		// No, the graph is FkTable -> []Influence{InfluencerTable, ConstraintName}
+		// So, if `tableName` is an FkTable, `l.graph[tableName]` lists its influencers.
+
+		// The graph is defined such that graph[FkTable] contains ReferencedTable (InfluencerTable).
+		// So, `tableName` is influenced by `influence.InfluencerTable`.
+		influencesOnTable := l.graph[tableName]
+
+		if len(influencesOnTable) > 0 {
+			fmt.Printf("  Directly influenced by (as FkTable via constraint):\n")
+
+			// Sort influences for deterministic output
+			sortedInfluences := make([]Influence, len(influencesOnTable))
+			copy(sortedInfluences, influencesOnTable)
+			slices.SortFunc(sortedInfluences, func(a, b Influence) int {
+				// Using cmp.Compare (Go 1.21+)
+				if c := cmp.Compare(a.InfluencerTable, b.InfluencerTable); c != 0 {
+					return c
+				}
+				return cmp.Compare(a.ConstraintName, b.ConstraintName)
+				// Alternative using strings.Compare:
+				// if res := strings.Compare(a.InfluencerTable, b.InfluencerTable); res != 0 { return res }
+				// return strings.Compare(a.ConstraintName, b.ConstraintName)
+			})
+
+			for _, influence := range sortedInfluences {
+				fmt.Printf("    - Table '%s' (Constraint: '%s')\n", influence.InfluencerTable, influence.ConstraintName)
+			}
+		}
+	}
+}
+
+func (l *LPA) Nodes() []string {
+	return l.nodes
+}
+
+func (l *LPA) RefTables(tableName string) []Influence {
+	return l.graph[tableName]
+}
+
 // cloneLabelSet creates a deep copy of a LabelSet.
 func cloneLabelSet(ls LabelSet) LabelSet {
 	if ls == nil {
@@ -241,7 +241,7 @@ func PrintDetailedOutput(title string, lpaInstance *LPA) {
 	fmt.Println(title)
 
 	// Access nodes and graph directly from lpaInstance. Labels are copied for safety if needed.
-	// For printing, direct read with RLock is fine for currentLabels.
+	// For printing, direct read with RLock is fine for CurrentLabels.
 	// lpaInstance.nodes is sorted during NewLPA.
 
 	lpaInstance.mu.RLock()
@@ -249,7 +249,7 @@ func PrintDetailedOutput(title string, lpaInstance *LPA) {
 
 	for _, tableName := range lpaInstance.nodes { // Iterate in sorted order
 		// Print Labels
-		labels, ok := lpaInstance.currentLabels[tableName]
+		labels, ok := lpaInstance.CurrentLabels[tableName]
 		if !ok {
 			fmt.Printf("Table %s: (no labels found)\n", tableName) // Should not happen
 			continue
