@@ -54,8 +54,12 @@ func readInput() (string, error) {
 	return string(inputBytes), nil
 }
 
-func generateDot(relations []Relation) string {
-	var sb strings.Builder
+func generateDot(relations []Relation, tablesDisplay map[string]*TableDisplayInfo) string {
+	sb := buildTable(relations, tablesDisplay)
+	return buildEdges(relations, sb)
+}
+
+func defineTableDisplay(relations []Relation) map[string]*TableDisplayInfo {
 	tablesDisplay := make(map[string]*TableDisplayInfo)
 
 	// Aggregate information into TableDisplayInfo
@@ -85,6 +89,11 @@ func generateDot(relations []Relation) string {
 			tablesDisplay[rel.ReferencedTable].ReferencedColsMap[col] = true
 		}
 	}
+	return tablesDisplay
+}
+
+func buildTable(relations []Relation, tablesDisplay map[string]*TableDisplayInfo) *strings.Builder {
+	var sb strings.Builder
 
 	sb.WriteString("digraph ERD {\n")
 	sb.WriteString("  rankdir=LR;\n")
@@ -142,12 +151,15 @@ func generateDot(relations []Relation) string {
 		sb.WriteString("    >\n  ];\n\n")
 	}
 
+	return &sb
+}
+
+func buildEdges(relations []Relation, sb *strings.Builder) string {
 	// Define edges for foreign key relationships
 	uniqueEdges := make(map[string]bool) // To avoid duplicate edges if input has redundancy
 	for _, rel := range relations {
 		edgeKey := fmt.Sprintf("\"%s\" -> \"%s\" :: %s", rel.FkTable, rel.ReferencedTable, rel.FkConstraintName)
 		if !uniqueEdges[edgeKey] {
-			// Using xlabel as requested
 			sb.WriteString(fmt.Sprintf("  \"%s\" -> \"%s\" [label=\" %s \"];\n",
 				rel.FkTable, rel.ReferencedTable, rel.FkConstraintName))
 			uniqueEdges[edgeKey] = true

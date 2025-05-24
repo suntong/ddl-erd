@@ -8,15 +8,6 @@ import (
 	"sync"
 )
 
-// Relation represents a parsed foreign key relationship.
-type Relation struct {
-	FkTable             string
-	FkConstraintName    string
-	FkColumns           []string
-	ReferencedTable     string
-	ReferencedPkColumns []string // Columns in the referenced table targeted by the FK
-}
-
 // LabelSet represents the set of labels for a node (table).
 // It's a map where keys are label strings and values are empty structs for set semantics.
 type LabelSet map[string]struct{}
@@ -260,6 +251,7 @@ func PrintLabels(labels map[string]LabelSet) {
 	}
 }
 
+/*
 // Example Usage (typically in a main function or a test file)
 func main() {
 	relations := []Relation{
@@ -293,3 +285,4 @@ func main() {
 	fmt.Println("\nFinal Labels:")
 	PrintLabels(finalLabels)
 }
+*/

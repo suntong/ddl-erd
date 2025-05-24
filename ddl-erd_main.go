@@ -40,13 +40,14 @@ func main() {
 	}
 
 	relations := parseSQL(input)
+	tablesDisplay := defineTableDisplay(relations)
 
 	// Output & Dispatch
 	if len(Opts.LPA) != 0 {
 		//
 		return
 	} else {
-		dotOutput := generateDot(relations)
+		dotOutput := generateDot(relations, tablesDisplay)
 		fmt.Println(dotOutput)
 	}
 }
