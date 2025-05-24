@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"regexp"
 	"strings"
@@ -43,19 +42,6 @@ type TableDisplayInfo struct {
 	DefinedFKs        []FKDetail           // FKs originating from this table
 	ReferencedBy      []ReferencedByDetail // FKs from other tables pointing to this table's columns
 	ReferencedColsMap map[string]bool      // Helper to list unique columns of this table that are referenced
-}
-
-// --- Main Program Flow ---
-
-func main() {
-	input, err := readInput()
-	if err != nil {
-		log.Fatalf("Error reading input: %v", err)
-	}
-
-	relations := parseSQL(input)
-	dotOutput := generateDot(relations)
-	fmt.Println(dotOutput)
 }
 
 // --- Core Functions ---

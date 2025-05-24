@@ -1,0 +1,35 @@
+# Go "flag" std pkg based cli def file
+PackageName: main
+
+# program name, name for the executable
+ProgramName: ddl-erd
+
+# prefix string before every environment variable
+Prefix: ddl-erd
+
+# Name of the structure to hold the values for/from commandline
+StructName: Options
+# The actual variable that hold the commandline paramter values
+StructVar: Opts
+
+Options:
+
+  - Name: LPA
+    Type: string
+    Flag: lpa
+    Value: '""'
+    Usage: "use LPA (Label Propagation Algorithms) based community detection partitioning strategy"
+
+  - Name: Help
+    Type: bool
+    Flag: h
+    Usage: show usage help
+    Value: false
+
+
+# Use the USAGE_SUMMARY in Usage help
+UsageSummary: "TRUE"
+
+UsageLead: "\\nUsage:\\n %s [flags] \\n\\nFlags:\\n\\n"
+
+UsageEnd: |
