@@ -1,7 +1,9 @@
 package main
 
 import (
+	"cmp" // For Go 1.21+ used in sorting Influence structs
 	"fmt"
+
 	// For Go 1.21+
 	"maps"
 	"slices"
@@ -12,12 +14,19 @@ import (
 // It's a map where keys are label strings and values are empty structs for set semantics.
 type LabelSet map[string]struct{}
 
+// Influence stores information about an influencing table and the constraint causing it.
+type Influence struct {
+	InfluencerTable string // The table that exerts influence (original ReferencedTable)
+	ConstraintName  string // The FkConstraintName for this specific influence
+}
+
 // LPA encapsulates the state and logic for the Label Propagation Algorithm.
 type LPA struct {
-	// graph stores the directed graph where a key node is influenced by nodes in its value slice.
-	// Specifically, FkTable -> ReferencedTable means FkTable is influenced by ReferencedTable.
-	// So, graph[FkTable] will contain ReferencedTable as an influencer.
-	graph map[string][]string
+	// graph stores the directed graph.
+	// For a key FkTable, the value is a slice of Influence structs.
+	// Each struct details an InfluencerTable (ReferencedTable) and the ConstraintName.
+	// FkTable is influenced by Influence.InfluencerTable via Influence.ConstraintName.
+	graph map[string][]Influence
 
 	// nodes is a sorted list of all unique table names. This primarily aids in
 	// deterministic initialization of goroutines if needed, though the parallel
@@ -33,7 +42,7 @@ type LPA struct {
 // NewLPA creates and initializes a new LPA instance from a list of relations.
 // It builds the graph structure and sets initial labels (each node gets its own name as a label).
 func NewLPA(relations []Relation) (*LPA, error) {
-	adj := make(map[string][]string)
+	adj := make(map[string][]Influence)
 	nodeSet := make(map[string]struct{}) // To collect unique node names
 	initialLabels := make(map[string]LabelSet)
 
@@ -50,8 +59,8 @@ func NewLPA(relations []Relation) (*LPA, error) {
 
 	for _, rel := range relations {
 		if rel.FkTable == "" || rel.ReferencedTable == "" {
-			// validation for empty table names
-			fmt.Printf("Warning: Relation contains empty FkTable ('%s') or ReferencedTable ('%s')\n", rel.FkTable, rel.ReferencedTable)
+			// Optional: Add more robust validation or logging for empty table names or constraint names.
+			// fmt.Printf("Warning: Relation contains empty FkTable ('%s') or ReferencedTable ('%s')\n", rel.FkTable, rel.ReferencedTable)
 		}
 
 		// Add both tables to the set of known nodes
@@ -60,7 +69,11 @@ func NewLPA(relations []Relation) (*LPA, error) {
 
 		// The FkTable is influenced by the ReferencedTable.
 		// Add ReferencedTable to the list of influencers for FkTable.
-		adj[rel.FkTable] = append(adj[rel.FkTable], rel.ReferencedTable)
+		influence := Influence{
+			InfluencerTable: rel.ReferencedTable,
+			ConstraintName:  rel.FkConstraintName, // Store the constraint name
+		}
+		adj[rel.FkTable] = append(adj[rel.FkTable], influence)
 	}
 
 	// Create a sorted list of nodes. Sorting helps in producing deterministic
@@ -77,10 +90,9 @@ func NewLPA(relations []Relation) (*LPA, error) {
 	for _, nodeName := range nodeList {
 		initialLabels[nodeName] = LabelSet{nodeName: {}}
 		if _, ok := adj[nodeName]; !ok {
-			// This node might only be a ReferencedTable and not an FkTable for any relation,
-			// or it's an isolated table if it was mentioned but not part of any processed relation.
-			// It has no influencers based on the FK definitions.
-			adj[nodeName] = []string{}
+			// This node might only be a ReferencedTable or an isolated table.
+			// It has no outgoing influences defined by FKs where it is the FkTable.
+			adj[nodeName] = []Influence{} // Ensure all nodes exist in the graph map
 		}
 	}
 
@@ -111,7 +123,6 @@ func (l *LPA) Run(maxIterations int) (map[string]LabelSet, int) {
 		// Access to this map from goroutines must be synchronized.
 		proposedLabelUpdates := make(map[string]LabelSet, len(l.nodes))
 		var proposedMu sync.Mutex
-
 		var wg sync.WaitGroup
 
 		// Create a snapshot of currentLabels for all goroutines to read from.
@@ -135,10 +146,12 @@ func (l *LPA) Run(maxIterations int) (map[string]LabelSet, int) {
 
 				// Get the list of nodes that influence the currentNode.
 				// l.graph is read-only after LPA initialization, so no lock needed here.
-				influencers := l.graph[currentNodeName]
+				directInfluences := l.graph[currentNodeName]
 
-				for _, influencerName := range influencers {
-					// Get the labels of the influencer from the snapshot of the previous iteration's state.
+				for _, influenceDetail := range directInfluences {
+					influencerName := influenceDetail.InfluencerTable // Table name to look up labels
+					// influenceDetail.ConstraintName is available here if needed for any logic,
+					// but standard LPA just uses the influencer's labels.
 					if influencerLabels, ok := labelsSnapshot[influencerName]; ok {
 						for label := range influencerLabels {
 							newNodeLabels[label] = struct{}{} // Add label to the set (union operation)
@@ -189,65 +202,96 @@ func (l *LPA) GetLabelsCopy() map[string]LabelSet {
 	return copiedLabels
 }
 
+// GetGraphForOutput returns a copy of the graph structure for output purposes.
+// This allows external functions to read graph details without modifying internal state.
+func (l *LPA) GetGraphForOutput() map[string][]Influence {
+	// Create a shallow copy of the map. The Influence slices are also copied.
+	// Since Influence structs are simple and l.graph is read-only after NewLPA during Run,
+	// this level of copying is generally safe for reading.
+	copiedGraph := make(map[string][]Influence, len(l.graph))
+	for FkTable, influences := range l.graph {
+		if influences == nil { // Handle case of nodes with no outgoing FKs parsed
+			copiedGraph[FkTable] = []Influence{}
+		} else {
+			influencesCopy := make([]Influence, len(influences))
+			copy(influencesCopy, influences)
+			copiedGraph[FkTable] = influencesCopy
+		}
+	}
+	return copiedGraph
+}
+
 // cloneLabelSet creates a deep copy of a LabelSet.
-// Uses maps.Clone (Go 1.21+). For older Go, implement manually.
 func cloneLabelSet(ls LabelSet) LabelSet {
 	if ls == nil {
 		return make(LabelSet) // Return empty, non-nil LabelSet
 	}
 	// For Go 1.21+
 	return maps.Clone(ls)
-	/*
-	   // Manual clone for older Go versions (e.g., < Go 1.21):
-	   cloned := make(LabelSet, len(ls))
-	   for k, v := range ls {
-	   	cloned[k] = v
-	   }
-	   return cloned
-	*/
 }
 
 // areLabelSetsEqual checks if two LabelSets are identical.
-// Uses maps.Equal (Go 1.21+ for generic version). struct{} is comparable.
 func areLabelSetsEqual(s1, s2 LabelSet) bool {
-	// For Go 1.21+ (specifically for generic maps.Equal)
-	return maps.Equal(s1, s2)
-	/*
-	   // Manual check for older Go versions:
-	   if len(s1) != len(s2) {
-	   	return false
-	   }
-	   // Handle cases where one or both might be nil but effectively empty
-	   if (s1 == nil && len(s2) == 0) || (s2 == nil && len(s1) == 0) {
-	       return true
-	   }
-	   if s1 == nil || s2 == nil { // one is nil, the other is not and non-empty
-	       return false
-	   }
-	   for k := range s1 {
-	   	if _, ok := s2[k]; !ok {
-	   		return false
-	   	}
-	   }
-	   return true
-	*/
+	return maps.Equal(s1, s2) // Go 1.21+
 }
 
-// Helper for printing labels in a consistent order (useful for debugging/testing).
-func PrintLabels(labels map[string]LabelSet) {
-	tableNames := make([]string, 0, len(labels))
-	for name := range labels {
-		tableNames = append(tableNames, name)
-	}
-	slices.Sort(tableNames) // Requires Go 1.21+
+// PrintDetailedOutput prints the labels for each table and their direct influences, including constraint names.
+// It uses the LPA's nodes for sorted table output, current labels, and the graph for influence details.
+func PrintDetailedOutput(title string, lpaInstance *LPA) {
+	fmt.Println(title)
 
-	for _, tableName := range tableNames {
-		labelList := make([]string, 0, len(labels[tableName]))
-		for label := range labels[tableName] {
+	// Access nodes and graph directly from lpaInstance. Labels are copied for safety if needed.
+	// For printing, direct read with RLock is fine for currentLabels.
+	// lpaInstance.nodes is sorted during NewLPA.
+
+	lpaInstance.mu.RLock()
+	defer lpaInstance.mu.RUnlock()
+
+	for _, tableName := range lpaInstance.nodes { // Iterate in sorted order
+		// Print Labels
+		labels, ok := lpaInstance.currentLabels[tableName]
+		if !ok {
+			fmt.Printf("Table %s: (no labels found)\n", tableName) // Should not happen
+			continue
+		}
+		labelList := make([]string, 0, len(labels))
+		for label := range labels {
 			labelList = append(labelList, label)
 		}
-		slices.Sort(labelList) // Requires Go 1.21+
+		slices.Sort(labelList)
 		fmt.Printf("Table %s: Labels %v\n", tableName, labelList)
+
+		// Print Direct Influences from the perspective of FkTable <- ReferencedTable
+		// The graph stores FkTable -> []Influence{ReferencedTable, ConstraintName}
+		// This means tableName *is influenced by* entries in lpaInstance.graph[tableName]
+		// No, the graph is FkTable -> []Influence{InfluencerTable, ConstraintName}
+		// So, if `tableName` is an FkTable, `lpaInstance.graph[tableName]` lists its influencers.
+
+		// The graph is defined such that graph[FkTable] contains ReferencedTable (InfluencerTable).
+		// So, `tableName` is influenced by `influence.InfluencerTable`.
+		influencesOnTable := lpaInstance.graph[tableName]
+
+		if len(influencesOnTable) > 0 {
+			fmt.Printf("  Directly influenced by (as FkTable via constraint):\n")
+
+			// Sort influences for deterministic output
+			sortedInfluences := make([]Influence, len(influencesOnTable))
+			copy(sortedInfluences, influencesOnTable)
+			slices.SortFunc(sortedInfluences, func(a, b Influence) int {
+				// Using cmp.Compare (Go 1.21+)
+				if c := cmp.Compare(a.InfluencerTable, b.InfluencerTable); c != 0 {
+					return c
+				}
+				return cmp.Compare(a.ConstraintName, b.ConstraintName)
+				// Alternative using strings.Compare:
+				// if res := strings.Compare(a.InfluencerTable, b.InfluencerTable); res != 0 { return res }
+				// return strings.Compare(a.ConstraintName, b.ConstraintName)
+			})
+
+			for _, influence := range sortedInfluences {
+				fmt.Printf("    - Table '%s' (Constraint: '%s')\n", influence.InfluencerTable, influence.ConstraintName)
+			}
+		}
 	}
 }
 
@@ -255,16 +299,21 @@ func PrintLabels(labels map[string]LabelSet) {
 // Example Usage (typically in a main function or a test file)
 func main() {
 	relations := []Relation{
-		{FkTable: "orders", ReferencedTable: "customers"},
-		{FkTable: "order_items", ReferencedTable: "orders"},
-		{FkTable: "order_items", ReferencedTable: "products"},
-		{FkTable: "reviews", ReferencedTable: "products"},
-		{FkTable: "reviews", ReferencedTable: "customers"},
-		// A more complex scenario:
-		{FkTable: "employee_projects", ReferencedTable: "employees"},
-		{FkTable: "employee_projects", ReferencedTable: "projects"},
-		{FkTable: "project_tasks", ReferencedTable: "projects"},
-		{FkTable: "employees", ReferencedTable: "departments"}, // Employees in depts
+		{FkTable: "orders", ReferencedTable: "customers", FkConstraintName: "fk_orders_cust"},
+		{FkTable: "order_items", ReferencedTable: "orders", FkConstraintName: "fk_oi_ord"},
+		{FkTable: "order_items", ReferencedTable: "products", FkConstraintName: "fk_oi_prod"},
+		{FkTable: "reviews", ReferencedTable: "products", FkConstraintName: "fk_rev_prod"},
+		{FkTable: "reviews", ReferencedTable: "customers", FkConstraintName: "fk_rev_cust"},
+		{FkTable: "employee_projects", ReferencedTable: "employees", FkConstraintName: "fk_ep_emp"},
+		{FkTable: "employee_projects", ReferencedTable: "projects", FkConstraintName: "fk_ep_proj"},
+		{FkTable: "project_tasks", ReferencedTable: "projects", FkConstraintName: "fk_pt_proj"},
+		{FkTable: "employees", ReferencedTable: "departments", FkConstraintName: "fk_emp_dept"},
+		// Example of a table that is only referenced, not an FkTable itself initially in this list
+		// {FkTable: "some_other_table", ReferencedTable: "departments", FkConstraintName: "fk_sot_dept"},
+		// Example of an isolated table (would need to be added manually if not in relations)
+		// To ensure "isolated_table" is part of the system, it must appear in at least one relation,
+		// or be added to nodeSet manually in NewLPA if such cases are possible.
+		// For this LPA, nodes are derived from relations.
 	}
 
 	lpaAlg, err := NewLPA(relations)
@@ -273,16 +322,21 @@ func main() {
 		return
 	}
 
-	fmt.Println("Initial Labels:")
-	PrintLabels(lpaAlg.GetLabelsCopy())
+	PrintDetailedOutput("Initial State (Labels and Direct Influences):", lpaAlg)
 	fmt.Println("---")
 
 	// Run LPA with a maximum of 10 iterations
-	finalLabels, iterations := lpaAlg.Run(10)
+	_, iterations := lpaAlg.Run(10) // finalLabels are now read via lpaAlg for PrintDetailedOutput
 
 	fmt.Printf("\n--- Running LPA ---\n")
 	fmt.Printf("LPA finished after %d iterations.\n", iterations)
-	fmt.Println("\nFinal Labels:")
-	PrintLabels(finalLabels)
+	fmt.Println("\nFinal State (Labels and Direct Influences):")
+	PrintDetailedOutput("", lpaAlg) // Title is optional or can be part of the surrounding prints
+
+	// Expected propagation:
+	// - "departments" label should reach "employees", then "employee_projects".
+	// - "customers" label should reach "orders", then "order_items". It also reaches "reviews".
+	// - "products" label should reach "order_items" and "reviews".
+	// - "projects" label should reach "employee_projects" and "project_tasks".
 }
 */
