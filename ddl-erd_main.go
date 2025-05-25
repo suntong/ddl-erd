@@ -44,7 +44,7 @@ func main() {
 
 	// Output & Dispatch
 	if len(Opts.LPA) != 0 {
-		generateLPADotFiles(relations, tablesDisplay)
+		generateLPADotFiles(Opts.LPA, relations, tablesDisplay)
 		return
 	} else {
 		dotOutput := generateDot(relations, tablesDisplay)

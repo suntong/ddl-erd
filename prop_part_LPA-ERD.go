@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"fmt"
 	"log"
+	"os"
 	"slices"
 )
 
@@ -61,7 +62,7 @@ func NewLPA(relations []Relation) (*LPA, error) {
 	}, nil
 }
 
-func generateLPADotFiles(relations []Relation, tablesDisplay map[string]*TableDisplayInfo) {
+func generateLPADotFiles(filePrefix string, relations []Relation, tablesDisplay map[string]*TableDisplayInfo) {
 	lpa, err := NewLPA(relations)
 	if err != nil {
 		log.Fatalf("Error creating LPA: %v\n", err)
@@ -125,6 +126,12 @@ func generateLPADotFiles(relations []Relation, tablesDisplay map[string]*TableDi
 			}
 		}
 		sb.WriteString("}\n")
-		fmt.Println(sb.String())
+
+		// output to file
+		filename := filePrefix + "." + tableName + ".dot"
+		err := os.WriteFile(filename, []byte(sb.String()), 0644)
+		if err != nil {
+			panic(err)
+		}
 	}
 }

@@ -41,12 +41,13 @@ func parseSQL(sqlContent string) []Relation {
 		pkColumns := SanitizeIdentifierList(result["PkColumns"])
 
 		relations = append(relations, Relation{
-			FkTable:             fkTableName,
-			FkConstraintName:    constraintName,
+			FkTable:             AllCapToTitle(fkTableName),
+			FkConstraintName:    AllCapToTitle(constraintName),
 			FkColumns:           fkColumns,
-			ReferencedTable:     pkTableName,
+			ReferencedTable:     AllCapToTitle(pkTableName),
 			ReferencedPkColumns: pkColumns,
 		})
 	}
+	//fmt.Printf("] relations: %#v\n", relations)
 	return relations
 }

@@ -211,3 +211,12 @@ func extractNamedGroups(regex *regexp.Regexp, matches []string) map[string]strin
 	}
 	return result
 }
+
+func AllCapToTitle(title string) string {
+	if regexp.MustCompile(`^[A-Z0-9_ ]+$`).MatchString(title) {
+		return regexp.MustCompile(` `).ReplaceAllString(
+			strings.Title(strings.ToLower(
+				regexp.MustCompile(`_`).ReplaceAllString(title, " "))), "_")
+	}
+	return title
+}
