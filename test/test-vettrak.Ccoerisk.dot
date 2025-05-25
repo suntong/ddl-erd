@@ -1,0 +1,55 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Ccoerisk" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Ccoerisk</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CCRI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Ccoerisk_Stage_Crli (CCRI_INTERVENE_STAGE_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Ccoerisk_Ccoe (CCOE_ID) &rarr; Cricoscoe (CCOE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Cricoscoe" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Cricoscoe</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CCOE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_English_Test_Crli (CCOE_ENGLISH_TEST_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Delivery_Empl (CCOE_DELIVERY_EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Loca (LOCA_ID) &rarr; Location (LOCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Exempt_Reason_Crli (CCOE_EXEMPT_REASON_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Approval_Clie (CCOE_APPROVAL_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Clie (CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Rpl_Approval_Clie (CCOE_RPL_CT_APPROVAL_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Under_18_Stay_Crli (CCOE_UNDER_18_STAY_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Referring_Empl (CCOE_REFERRING_EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Oshc (OSHC_ID) &rarr; Oshcprovider (OSHC_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Orga (ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Qual (QUAL_ID) &rarr; Qualcricos (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Other_Test_Crli (CCOE_OTHER_TEST_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Cricoslist" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Cricoslist</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CRLI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Ccoerisk" -> "Cricoscoe" [label=" Fk_Ccoerisk_Ccoe "];
+  "Ccoerisk" -> "Cricoslist" [label=" Fk_Ccoerisk_Stage_Crli "];
+}

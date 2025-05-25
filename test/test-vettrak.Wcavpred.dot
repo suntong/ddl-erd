@@ -1,0 +1,45 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Wcavpred" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Wcavpred</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Wcavpred_Pred (PRED_ID) &rarr; Prioreducation (PRED_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Wcavpred_Wcav (WCAV_ID) &rarr; Webclientavetmiss (WCAV_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Prioreducation" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Prioreducation</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">PRED_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Webclientavetmiss" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Webclientavetmiss</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">WCAV_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclientavetmiss_Lang (LANG_ID) &rarr; Language (LANG_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclientavetmiss_Coun (COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclientavetmiss_Emca (EMCA_ID) &rarr; Employmentcategory (EMCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclientavetmiss_Scle (SCLE_ID) &rarr; Schoollevel (SCLE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclientavetmiss_Wecl (WECL_ID) &rarr; Webclient (WECL_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Wcavpred" -> "Prioreducation" [label=" Fk_Wcavpred_Pred "];
+  "Wcavpred" -> "Webclientavetmiss" [label=" Fk_Wcavpred_Wcav "];
+}

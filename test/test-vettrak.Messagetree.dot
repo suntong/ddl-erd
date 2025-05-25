@@ -1,0 +1,34 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Messages" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Messages</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">MESS_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Messages_From_Clie (MESS_FROM_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Messages_To_Clie (MESS_TO_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Messages_Parent (MESS_PARENT_ID) &rarr; Messages (MESS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Messages_To_Inst (MESS_TO_INST_ID) &rarr; Instance (INST_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Messagetree" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Messagetree</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Messagetree_Child (MESS_CHILD_ID) &rarr; Messages (MESS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Messagetree_Parent (MESS_PARENT_ID) &rarr; Messages (MESS_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Messagetree" -> "Messages" [label=" Fk_Messagetree_Child "];
+  "Messagetree" -> "Messages" [label=" Fk_Messagetree_Parent "];
+}

@@ -1,0 +1,39 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Mecomefi" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Mecomefi</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Mecomefi_Mefi (MEFI_ID) &rarr; Mergefield (MEFI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Mecomefi_Meco (MECO_ID) &rarr; Mergecontext (MECO_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Mergecontext" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Mergecontext</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">MECO_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Mergefield" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Mergefield</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">MEFI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Mecomefi" -> "Mergecontext" [label=" Fk_Mecomefi_Meco "];
+  "Mecomefi" -> "Mergefield" [label=" Fk_Mecomefi_Mefi "];
+}

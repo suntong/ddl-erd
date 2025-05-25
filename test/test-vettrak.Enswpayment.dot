@@ -1,0 +1,31 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Enswpayment" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Enswpayment</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enswpayment_Mete (ENSW_ID) &rarr; Enrolment_Nsw (ENSW_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Enrolment_Nsw" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Enrolment_Nsw</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ENSW_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Nsw_Empl (ENSW_EMPLOYER) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Nsw_Esp_Org_Id (ENSW_ESP_ORG_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Nsw_Part_Qual_Id (ENSW_PART_PARENT_QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Enswpayment" -> "Enrolment_Nsw" [label=" Fk_Enswpayment_Mete "];
+}

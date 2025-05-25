@@ -1,0 +1,60 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Webwaitlist" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Webwaitlist</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webwaitlist_Refe (REFE_ID) &rarr; Referral (REFE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webewaitlist_Prog (PROG_ID) &rarr; Programme (PROG_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webewaitlist_Wecl (WECL_ID) &rarr; Webclient (WECL_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Programme" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Programme</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">PROG_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Programme_Prgt (PRGT_ID) &rarr; Programmetype (PRGT_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Referral" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Referral</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">REFE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Webclient" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Webclient</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">WECL_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclient_Sucs (SUCS_ID) &rarr; Surveycontactstatus (SUCS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclient_Usual_Addr (WECL_USUAL_ADDR_ID) &rarr; Address (ADDR_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclient_Postal_Addr (WECL_POSTAL_ADDR_ID) &rarr; Address (ADDR_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclient_Divi (DIVI_ID) &rarr; Division (DIVI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclient_Weco (WECO_ID) &rarr; Webcompany (WECO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Webclient_Webe (WEBE_ID) &rarr; Webenrol (WEBE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Webwaitlist" -> "Programme" [label=" Fk_Webewaitlist_Prog "];
+  "Webwaitlist" -> "Referral" [label=" Fk_Webwaitlist_Refe "];
+  "Webwaitlist" -> "Webclient" [label=" Fk_Webewaitlist_Wecl "];
+}

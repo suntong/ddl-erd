@@ -1,0 +1,50 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Childcareclaim" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Childcareclaim</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcareclaim_Clin (CLIN_ID) &rarr; Clieinst (CLIN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcareclaim_Chca (CHCA_ID) &rarr; Childcare (CHCA_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Childcare" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Childcare</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CHCA_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcare_Child (CHIL_ID) &rarr; Child (CHIL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcare_Delivered (CHCA_DELIVEREDBY) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcare_Parent (CLIE_PARENT_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcare_Chca (CHCA_PARENT_ID) &rarr; Childcare (CHCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcare_Collected (CHCA_COLLECTEDBY) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Childcare_Empl (EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Clieinst" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Clieinst</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CLIN_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Clieinst_Inst (INST_ID) &rarr; Instance (INST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Clieinst_Clie (CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Clieinst_Tcve (TCVE_ID) &rarr; Tecoversion (TCVE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Childcareclaim" -> "Childcare" [label=" Fk_Childcareclaim_Chca "];
+  "Childcareclaim" -> "Clieinst" [label=" Fk_Childcareclaim_Clin "];
+}

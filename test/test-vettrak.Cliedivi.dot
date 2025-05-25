@@ -1,0 +1,59 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Cliedivi" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Cliedivi</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cliedivi_Clie (USER_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cliedivi_Divi (DIVI_ID) &rarr; Division (DIVI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Client" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Client</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CLIE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Refe (REFE_ID) &rarr; Referral (REFE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Divi (DIVI_ID) &rarr; Division (DIVI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Vity (VITY_ID) &rarr; Visatype (VITY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Passport_Coun (CLIE_PASSPORT_COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Clie_Parent (CLIE_PARENT_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_State_Client_R (CLIE_RSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Rcoun (CLIE_RCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Usi_Orga (CLIE_USI_ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Crte (CRTE_ID) &rarr; Creditterm (CRTE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Lang (LANG_ID) &rarr; Language (LANG_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Sucs (SUCS_ID) &rarr; Surveycontactstatus (SUCS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Pcoun (CLIE_PCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_State_Client_P (CLIE_PSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Empl (EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Emca (EMCA_ID) &rarr; Employmentcategory (EMCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Scle (SCLE_ID) &rarr; Schoollevel (SCLE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Coun (COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Division" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Division</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">DIVI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Division_Divi_Parent (DIVI_PARENT_ID) &rarr; Division (DIVI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Cliedivi" -> "Client" [label=" Fk_Cliedivi_Clie "];
+  "Cliedivi" -> "Division" [label=" Fk_Cliedivi_Divi "];
+}

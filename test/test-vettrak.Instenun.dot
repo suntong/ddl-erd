@@ -1,0 +1,67 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Enrounit" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Enrounit</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ENUN_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Qual (QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Dest (DEST_ID) &rarr; Deliverystrategy (DEST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Anzs (ANZS_ID) &rarr; Anzsic (ANZS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Loca (LOCA_ID) &rarr; Location (LOCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Unit (UNIT_ID) &rarr; Unit (UNIT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Plac (PLAC_ID) &rarr; Placement (PLAC_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Feex (FEEX_ID) &rarr; Feeexemption (FEEX_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Enrounit_Staff (ENUN_STAF_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Fpco (FPCO_ID) &rarr; Finpacourse (FPCO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Rto_Id (ENUN_RTO_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Fust (FUST_ID) &rarr; Fundingstate (FUST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Stre (STRE_ID) &rarr; Studyreason (STRE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Clie (CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Quty (QUTY_ID) &rarr; Quuntype (QUTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Feex_Waiver (ENUN_WAIVER_FEEX_ID) &rarr; Feeexemption (FEEX_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Dety (DETY_ID) &rarr; Deliverytype (DETY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Enro (ENRO_ID) &rarr; Enrolment (ENRO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Rety (RETY_ID) &rarr; Resulttype (RETY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Completed_Lmsi (ENUN_COMPLETED_LMSI_ID) &rarr; Lmsintegration (LMSI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Fpbr (FPBR_ID) &rarr; Finpabrand (FPBR_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrounit_Puco (PUCO_ID) &rarr; Purchasingcontract (PUCO_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Instance" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Instance</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">INST_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Instance_Room (ROOM_ID) &rarr; Room (ROOM_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Instance_Inty (INTY_ID) &rarr; Instancetype (INTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Instance_Grou (GROU_ID) &rarr; Groups (GROU_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Instance (ENRO_ID) &rarr; Enrolment (ENRO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Instance_Clie (CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Instenun" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Instenun</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Instenun_Inst (INST_ID) &rarr; Instance (INST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Instenun_Enun (ENUN_ID) &rarr; Enrounit (ENUN_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Instenun" -> "Enrounit" [label=" Fk_Instenun_Enun "];
+  "Instenun" -> "Instance" [label=" Fk_Instenun_Inst "];
+}

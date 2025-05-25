@@ -1,0 +1,107 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Status" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Status</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">STUS_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Ccoeterminate" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Ccoeterminate</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Ccoeterminate_Reason_Crli (CCTE_REASON_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Ccoeterminate_Care (CARE_ID) &rarr; Cancellationreason (CARE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Ccoeterminate_Approval_Clie (CCTE_APPROVAL_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Ccoeterminate_Stus (STUS_ID) &rarr; Status (STUS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Ccoeterminate_Ccoe (CCOE_ID) &rarr; Cricoscoe (CCOE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Cancellationreason" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Cancellationreason</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CARE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Client" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Client</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CLIE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Refe (REFE_ID) &rarr; Referral (REFE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Divi (DIVI_ID) &rarr; Division (DIVI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Vity (VITY_ID) &rarr; Visatype (VITY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Passport_Coun (CLIE_PASSPORT_COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Clie_Parent (CLIE_PARENT_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_State_Client_R (CLIE_RSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Rcoun (CLIE_RCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Usi_Orga (CLIE_USI_ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Crte (CRTE_ID) &rarr; Creditterm (CRTE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Lang (LANG_ID) &rarr; Language (LANG_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Sucs (SUCS_ID) &rarr; Surveycontactstatus (SUCS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Pcoun (CLIE_PCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_State_Client_P (CLIE_PSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Empl (EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Emca (EMCA_ID) &rarr; Employmentcategory (EMCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Scle (SCLE_ID) &rarr; Schoollevel (SCLE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Coun (COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Cricoscoe" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Cricoscoe</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CCOE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_English_Test_Crli (CCOE_ENGLISH_TEST_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Delivery_Empl (CCOE_DELIVERY_EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Loca (LOCA_ID) &rarr; Location (LOCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Exempt_Reason_Crli (CCOE_EXEMPT_REASON_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Approval_Clie (CCOE_APPROVAL_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Clie (CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Rpl_Approval_Clie (CCOE_RPL_CT_APPROVAL_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Under_18_Stay_Crli (CCOE_UNDER_18_STAY_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Referring_Empl (CCOE_REFERRING_EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Oshc (OSHC_ID) &rarr; Oshcprovider (OSHC_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Orga (ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Qual (QUAL_ID) &rarr; Qualcricos (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Cricoscoe_Other_Test_Crli (CCOE_OTHER_TEST_CRLI_ID) &rarr; Cricoslist (CRLI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Cricoslist" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Cricoslist</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CRLI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Ccoeterminate" -> "Cancellationreason" [label=" Fk_Ccoeterminate_Care "];
+  "Ccoeterminate" -> "Client" [label=" Fk_Ccoeterminate_Approval_Clie "];
+  "Ccoeterminate" -> "Cricoscoe" [label=" Fk_Ccoeterminate_Ccoe "];
+  "Ccoeterminate" -> "Cricoslist" [label=" Fk_Ccoeterminate_Reason_Crli "];
+  "Ccoeterminate" -> "Status" [label=" Fk_Ccoeterminate_Stus "];
+}

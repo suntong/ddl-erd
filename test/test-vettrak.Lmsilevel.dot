@@ -1,0 +1,32 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Lmsilevel" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Lmsilevel</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">LMSI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD ALIGN="LEFT">LMLE_LEVEL</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Lmsilevel_Lmsi (LMSI_ID) &rarr; Lmsintegration (LMSI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Lmsintegration" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Lmsintegration</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">LMSI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Lmsintegration_Dest (DEST_ID) &rarr; Deliverystrategy (DEST_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Lmsilevel" -> "Lmsintegration" [label=" Fk_Lmsilevel_Lmsi "];
+}

@@ -1,0 +1,463 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Fundingnational" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Fundingnational</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">FUNA_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Programme" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Programme</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">PROG_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Programme_Prgt (PRGT_ID) &rarr; Programmetype (PRGT_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Referral" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Referral</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">REFE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Enrolment" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Enrolment</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ENRO_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Empl (EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Coru (CORU_ID) &rarr; Commissionrule (CORU_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Spon (SPON_ID) &rarr; Specialisation (SPON_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Agent_Clie (ENRO_AGENT_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Feex (FEEX_ID) &rarr; Feeexemption (FEEX_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Cont (CONT_ID) &rarr; Contract (CONT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Loca (LOCA_ID) &rarr; Location (LOCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Orga (ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Workplace_Empl (ENRO_VIC_WORKPLACE_EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Ensw (ENSW_ID) &rarr; Enrolment_Nsw (ENSW_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Agency_Empl (ENRO_AGENCY_EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Stus (STUS_ID) &rarr; Status (STUS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Refe (REFE_ID) &rarr; Referral (REFE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Funa (FUNA_ID) &rarr; Fundingnational (FUNA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Coty_Id (COTY_ID) &rarr; Contracttype (COTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Feex_Waiver (ENRO_WAIVER_FEEX_ID) &rarr; Feeexemption (FEEX_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Enro_Emcl_Clie_Id (ENRO_EMCL_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Superseding (ENRO_SUPERSEDING_ID) &rarr; Enrolment (ENRO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Rto_Id (ENRO_RTO_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Anzs (ANZS_ID) &rarr; Anzsic (ANZS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Prof (PROF_ID) &rarr; Profile (PROF_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Fust (FUST_ID) &rarr; Fundingstate (FUST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Scty (SCTY_ID) &rarr; Schooltype (SCTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Fpbr (FPBR_ID) &rarr; Finpabrand (FPBR_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Voca_Id (VOCA_ID) &rarr; Vocation (VOCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Care (CARE_ID) &rarr; Cancellationreason (CARE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Associated_Qual_Id (ENRO_ASSOCIATED_QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Step_Parent (ENRO_STEP_PARENT_ID) &rarr; Enrolment (ENRO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Dety (DETY_ID) &rarr; Deliverytype (DETY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Programme_Enrolment (PROG_ID) &rarr; Programme (PROG_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Puco (PUCO_ID) &rarr; Purchasingcontract (PUCO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Enrolment (ENRO_PARENT_ID) &rarr; Enrolment (ENRO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Fumo (FUMO_ID) &rarr; Fundingmodel (FUMO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Divi (DIVI_ID) &rarr; Division (DIVI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Spec (SPEC_ID) &rarr; Specificfunding (SPEC_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Stre (STRE_ID) &rarr; Studyreason (STRE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Qual (QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Clie (CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Client" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Client</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CLIE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Refe (REFE_ID) &rarr; Referral (REFE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Divi (DIVI_ID) &rarr; Division (DIVI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Vity (VITY_ID) &rarr; Visatype (VITY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Passport_Coun (CLIE_PASSPORT_COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Clie_Parent (CLIE_PARENT_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_State_Client_R (CLIE_RSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Rcoun (CLIE_RCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Usi_Orga (CLIE_USI_ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Crte (CRTE_ID) &rarr; Creditterm (CRTE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Lang (LANG_ID) &rarr; Language (LANG_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Sucs (SUCS_ID) &rarr; Surveycontactstatus (SUCS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Pcoun (CLIE_PCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_State_Client_P (CLIE_PSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Empl (EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Emca (EMCA_ID) &rarr; Employmentcategory (EMCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Scle (SCLE_ID) &rarr; Schoollevel (SCLE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Client_Coun (COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Contract" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Contract</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CONT_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Rto (CONT_RTO_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Emcl_Clie (CONT_EMCL_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Prof (PROF_ID) &rarr; Profile (PROF_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Clie (CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Qual (QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Coty (COTY_ID) &rarr; Contracttype (COTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Nac (CONT_NAC_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Orga (ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Care (CARE_ID) &rarr; Cancellationreason (CARE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Empl (EMPL_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Stus (STUS_ID) &rarr; Status (STUS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Fust (FUST_ID) &rarr; Fundingstate (FUST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Contract_Voca (VOCA_ID) &rarr; Vocation (VOCA_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Division" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Division</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">DIVI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Division_Divi_Parent (DIVI_PARENT_ID) &rarr; Division (DIVI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Feeexemption" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Feeexemption</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">FEEX_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Feeexemption_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Anzsic" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Anzsic</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ANZS_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Deliverytype" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Deliverytype</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">DETY_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Organisation" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Organisation</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ORGA_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Organisation_Cricos_Clie (ORGA_CRICOS_CONTACT_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Organisation_Prty (PRTY_ID) &rarr; Providertype (PRTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Organisation_Fisy (FISY_ID) &rarr; Financesystem (FISY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Organisation_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Organisation_Public_Clie (ORGA_PUBLIC_CONTACT_CLIE_ID) &rarr; Client (CLIE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Studyreason" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Studyreason</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">STRE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Studyreason_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Contracttype" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Contracttype</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">COTY_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Finpabrand" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Finpabrand</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">FPBR_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Finpabrand_Dest (DEST_ID) &rarr; Deliverystrategy (DEST_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Purchasingcontract" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Purchasingcontract</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">PUCO_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Purchasingcontract_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Commissionrule" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Commissionrule</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CORU_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Commissionrule_Ledg (LEDG_ID) &rarr; Ledger (LEDG_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Enrolment_Nsw" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Enrolment_Nsw</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ENSW_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Nsw_Empl (ENSW_EMPLOYER) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Nsw_Esp_Org_Id (ENSW_ESP_ORG_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Enrolment_Nsw_Part_Qual_Id (ENSW_PART_PARENT_QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Location" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Location</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">LOCA_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Location_Regi (REGI_ID) &rarr; Region (REGI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Location_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Location_Coun (COUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Location_Load (LOAD_ID) &rarr; Loading (LOAD_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Specialisation" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Specialisation</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">SPON_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Vocation" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Vocation</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">VOCA_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Specificfunding" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Specificfunding</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">SPEC_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Cancellationreason" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Cancellationreason</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">CARE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Employer" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Employer</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">EMPL_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Emty (EMTY_ID) &rarr; Employertype (EMTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Pcoun_Id (EMPL_PCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Bcoun_Id (EMPL_BCOUN_ID) &rarr; Country (COUN_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Bstat (EMPL_BSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Refe (REFE_ID) &rarr; Referral (REFE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Anzs (ANZS_ID) &rarr; Anzsic (ANZS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Pstat (EMPL_PSTAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Empl (EMPL_PARENT_ID) &rarr; Employer (EMPL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Employer_Crte (CRTE_ID) &rarr; Creditterm (CRTE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Profile" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Profile</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">PROF_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Profile_Qual (QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Qualification" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Qualification</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">QUAL_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Qual (QUAL_PARENT_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Anzo (ANZO_ID) &rarr; Anzsco (ANZO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Spon (SPON_ID) &rarr; Specialisation (SPON_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Foed_Qualification (FOED_ID) &rarr; Fieldofeducation (FOED_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Quca (QUCA_ID) &rarr; Qualificationcategory (QUCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Rest (REST_ID) &rarr; Recognitionstatus (REST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Superseded (QUAL_SUPERSEDED_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Pack (PACK_ID) &rarr; Package (PACK_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Schooltype" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Schooltype</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">SCTY_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Status" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Status</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">STUS_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Fundingmodel" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Fundingmodel</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">FUMO_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fundingmodel_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fundingmodel_Qual (QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fundingmodel_Orga (ORGA_ID) &rarr; Organisation (ORGA_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Fundingstate" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Fundingstate</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">FUST_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fundingnational_Fundingstate (FUNA_ID) &rarr; Fundingnational (FUNA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fundingstate_Stat (STAT_ID) &rarr; State (STAT_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Enrolment" -> "Anzsic" [label=" Fk_Enrolment_Anzs "];
+  "Enrolment" -> "Cancellationreason" [label=" Fk_Enrolment_Care "];
+  "Enrolment" -> "Client" [label=" Fk_Enrolment_Agent_Clie "];
+  "Enrolment" -> "Client" [label=" Fk_Enrolment_Clie "];
+  "Enrolment" -> "Client" [label=" Fk_Enrolment_Enro_Emcl_Clie_Id "];
+  "Enrolment" -> "Commissionrule" [label=" Fk_Enrolment_Coru "];
+  "Enrolment" -> "Contract" [label=" Fk_Enrolment_Cont "];
+  "Enrolment" -> "Contracttype" [label=" Fk_Enrolment_Coty_Id "];
+  "Enrolment" -> "Deliverytype" [label=" Fk_Enrolment_Dety "];
+  "Enrolment" -> "Division" [label=" Fk_Enrolment_Divi "];
+  "Enrolment" -> "Employer" [label=" Fk_Enrolment_Agency_Empl "];
+  "Enrolment" -> "Employer" [label=" Fk_Enrolment_Empl "];
+  "Enrolment" -> "Employer" [label=" Fk_Enrolment_Rto_Id "];
+  "Enrolment" -> "Employer" [label=" Fk_Enrolment_Workplace_Empl "];
+  "Enrolment" -> "Enrolment" [label=" Fk_Enrolment_Enrolment "];
+  "Enrolment" -> "Enrolment" [label=" Fk_Enrolment_Step_Parent "];
+  "Enrolment" -> "Enrolment" [label=" Fk_Enrolment_Superseding "];
+  "Enrolment" -> "Enrolment_Nsw" [label=" Fk_Enrolment_Ensw "];
+  "Enrolment" -> "Feeexemption" [label=" Fk_Enrolment_Feex "];
+  "Enrolment" -> "Feeexemption" [label=" Fk_Enrolment_Feex_Waiver "];
+  "Enrolment" -> "Finpabrand" [label=" Fk_Enrolment_Fpbr "];
+  "Enrolment" -> "Fundingmodel" [label=" Fk_Enrolment_Fumo "];
+  "Enrolment" -> "Fundingnational" [label=" Fk_Enrolment_Funa "];
+  "Enrolment" -> "Fundingstate" [label=" Fk_Enrolment_Fust "];
+  "Enrolment" -> "Location" [label=" Fk_Enrolment_Loca "];
+  "Enrolment" -> "Organisation" [label=" Fk_Enrolment_Orga "];
+  "Enrolment" -> "Profile" [label=" Fk_Enrolment_Prof "];
+  "Enrolment" -> "Programme" [label=" Fk_Programme_Enrolment "];
+  "Enrolment" -> "Purchasingcontract" [label=" Fk_Enrolment_Puco "];
+  "Enrolment" -> "Qualification" [label=" Fk_Enrolment_Associated_Qual_Id "];
+  "Enrolment" -> "Qualification" [label=" Fk_Enrolment_Qual "];
+  "Enrolment" -> "Referral" [label=" Fk_Enrolment_Refe "];
+  "Enrolment" -> "Schooltype" [label=" Fk_Enrolment_Scty "];
+  "Enrolment" -> "Specialisation" [label=" Fk_Enrolment_Spon "];
+  "Enrolment" -> "Specificfunding" [label=" Fk_Enrolment_Spec "];
+  "Enrolment" -> "Status" [label=" Fk_Enrolment_Stus "];
+  "Enrolment" -> "Studyreason" [label=" Fk_Enrolment_Stre "];
+  "Enrolment" -> "Vocation" [label=" Fk_Enrolment_Voca_Id "];
+}

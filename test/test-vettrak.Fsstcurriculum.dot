@@ -1,0 +1,71 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Fsstcurriculum" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Fsstcurriculum</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstcurriculum_Qual (QUAL_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstcurriculum_Fsst (FSST_ID) &rarr; Fsstage (FSST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstcurriculum_Fsli (FSLI_ID) &rarr; Fslist (FSLI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Fslist" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Fslist</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">FSLI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Fsstage" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Fsstage</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">FSST_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Review_Staf (FSST_REVIEW_STAF_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Level_Path_Fsli (FSST_LEVEL_PATH_FSLI_ID) &rarr; Fslist (FSLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Pathway_Staf (FSST_PATHWAY_STAF_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Fsas (FSAS_ID) &rarr; Fsassessment (FSAS_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Learn_Staf (FSST_LEARN_STAF_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Inty (INTY_ID) &rarr; Instancetype (INTY_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Outcome_Fsli (FSST_OUTCOME_FSLI_ID) &rarr; Fslist (FSLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Exit_Staf (FSST_EXIT_STAF_ID) &rarr; Client (CLIE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Commitment_Fsli (FSST_COMMITMENT_FSLI_ID) &rarr; Fslist (FSLI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Fsstage_Fspa (FSPA_ID) &rarr; Fspathway (FSPA_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Qualification" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Qualification</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">QUAL_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Qual (QUAL_PARENT_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Anzo (ANZO_ID) &rarr; Anzsco (ANZO_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Spon (SPON_ID) &rarr; Specialisation (SPON_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Foed_Qualification (FOED_ID) &rarr; Fieldofeducation (FOED_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Quca (QUCA_ID) &rarr; Qualificationcategory (QUCA_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Rest (REST_ID) &rarr; Recognitionstatus (REST_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Superseded (QUAL_SUPERSEDED_ID) &rarr; Qualification (QUAL_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Qualification_Pack (PACK_ID) &rarr; Package (PACK_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Fsstcurriculum" -> "Fslist" [label=" Fk_Fsstcurriculum_Fsli "];
+  "Fsstcurriculum" -> "Fsstage" [label=" Fk_Fsstcurriculum_Fsst "];
+  "Fsstcurriculum" -> "Qualification" [label=" Fk_Fsstcurriculum_Qual "];
+}

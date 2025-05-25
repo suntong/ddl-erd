@@ -1,0 +1,30 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Lmleresult" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Lmleresult</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Lmleresult_Lmsi_Level (LMSI_ID, LMLE_LEVEL) &rarr; Lmsilevel (LMSI_ID, LMLE_LEVEL)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Lmsilevel" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Lmsilevel</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">LMSI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD ALIGN="LEFT">LMLE_LEVEL</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Lmsilevel_Lmsi (LMSI_ID) &rarr; Lmsintegration (LMSI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Lmleresult" -> "Lmsilevel" [label=" Fk_Lmleresult_Lmsi_Level "];
+}

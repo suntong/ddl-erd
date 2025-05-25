@@ -1,0 +1,46 @@
+digraph ERD {
+  rankdir=LR;
+  node [shape=plaintext, style=filled, fillcolor=lightyellow];
+  edge [arrowhead=crow, arrowtail=none, dir=both, labelfontsize=10];
+
+  "Urfidbre" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Urfidbre</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Urfidbre_Urfi (URFI_ID) &rarr; Userreportfield (URFI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Urfidbre_Dbre (DBRE_ID) &rarr; Dbrelation (DBRE_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Dbrelation" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Dbrelation</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">DBRE_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Dbrelation_Dbfi_From_Id (DBFI_FROM_ID) &rarr; Dbfield (DBFI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Dbrelation_Dbfi_To_Id (DBFI_TO_ID) &rarr; Dbfield (DBFI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Userreportfield" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="lightyellow">
+      <TR><TD COLSPAN="2" BGCOLOR="lightblue"><B>Userreportfield</B></TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Referenced By Other Tables As Key:</I></TD></TR>
+      <TR><TD ALIGN="LEFT">URFI_ID</TD><TD ALIGN="LEFT">(Referenced)</TD></TR>
+      <TR><TD COLSPAN="2" ALIGN="LEFT"><I>Foreign Keys Defined Here:</I></TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Userreportfield_Usre (USRE_ID) &rarr; Userreport (USRE_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Userreportfield_Dbfi (DBFI_ID) &rarr; Dbfield (DBFI_ID)</TD></TR>
+      <TR><TD ALIGN="LEFT" COLSPAN="2">Fk_Userreportfield_Cufi (CUFI_ID) &rarr; Customfield (CUFI_ID)</TD></TR>
+    </TABLE>
+    >
+  ];
+
+  "Urfidbre" -> "Dbrelation" [label=" Fk_Urfidbre_Dbre "];
+  "Urfidbre" -> "Userreportfield" [label=" Fk_Urfidbre_Urfi "];
+}
